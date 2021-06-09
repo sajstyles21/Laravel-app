@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ProfileRequest;
 use Auth;
-use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Mail;
@@ -171,7 +170,7 @@ class UserController extends Controller
             $user->user_name = $request->user_name??null;
             $user->email = $request->email??null;
             $user->user_role = $request->user_role??null;
-            $user->registered_at = Carbon::now();
+            $user->registered_at = $request->user_role??null;
             if ($request->hasFile('avatar')) {
                 //  Let's do everything here
                 if ($request->file('avatar')->isValid()) {

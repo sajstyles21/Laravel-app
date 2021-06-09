@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ProfileRequest;
 use Auth;
-use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Mail;

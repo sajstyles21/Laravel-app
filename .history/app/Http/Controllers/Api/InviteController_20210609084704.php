@@ -145,8 +145,8 @@ class InviteController extends Controller
                         'pin' => $pin,
                         'token' => $invite->token,
                     ];
-                    SendEmailPin::dispatch($invite->email,$data);
-                    //Mail::to($invite->email)->send(new SendPin($data));
+                    SendEmailInvite::dispatch($invite->email,$invoice_created);
+                    Mail::to($invite->email)->send(new SendPin($data));
                     $invite->pin = $pin;
                     $invite->save();
                     return response([

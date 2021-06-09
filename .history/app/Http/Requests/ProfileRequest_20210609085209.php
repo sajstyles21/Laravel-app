@@ -44,7 +44,7 @@ class ProfileRequest extends FormRequest
     public function messages()
     {
         return [
-            'avatar.dimensions'=>'Image dimensions should be 256px X 256px',
+            'avatar.dimensions'=>'Image dimensions should be 256 X 256',
         ];
     }
 }

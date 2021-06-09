@@ -9,7 +9,6 @@ use App\Mail\SendPin;
 use App\Models\Invite;
 use App\Models\User;
 use App\Jobs\SendEmailInvite;
-use App\Jobs\SendEmailPin;
 use Hash;
 use Illuminate\Http\Request;
 use Mail;
@@ -145,8 +144,7 @@ class InviteController extends Controller
                         'pin' => $pin,
                         'token' => $invite->token,
                     ];
-                    SendEmailPin::dispatch($invite->email,$data);
-                    //Mail::to($invite->email)->send(new SendPin($data));
+                    Mail::to($invite->email)->send(new SendPin($data));
                     $invite->pin = $pin;
                     $invite->save();
                     return response([

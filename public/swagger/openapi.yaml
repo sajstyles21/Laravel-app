@@ -1,0 +1,245 @@
+openapi: 3.0.0
+info:
+  title: 'Laravel App'
+  description: 'Laravel Apis'
+  contact:
+    name: 'Suraj Sharma'
+    email: sharmasuraj41@gmail.com
+  version: 1.0.0
+servers:
+  -
+    url: 'http://127.0.0.1:8000'
+paths:
+  /api/send_invite:
+    post:
+      tags:
+        - User
+      summary: 'User send invite'
+      description: 'User send invite'
+      operationId: users.invite
+      parameters:
+        -
+          $ref: '#/components/parameters/X-localization'
+        -
+          name: email
+          in: query
+          required: false
+          schema:
+            type: email
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiModel'
+  '/api/get_user_data/{token}':
+    get:
+      tags:
+        - User
+      summary: 'User get data'
+      description: 'User get data'
+      operationId: users.data
+      parameters:
+        -
+          $ref: '#/components/parameters/X-localization'
+        -
+          name: user_name
+          in: query
+          required: true
+          schema:
+            type: string
+        -
+          name: password
+          in: query
+          required: true
+          schema:
+            type: string
+        -
+          name: token
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiModel'
+  '/api/confirm_pin/{token}':
+    get:
+      tags:
+        - User
+      summary: 'User confirm pin'
+      description: 'User confirm pin'
+      operationId: users.pin
+      parameters:
+        -
+          $ref: '#/components/parameters/X-localization'
+        -
+          name: pin
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiModel'
+  /api/login:
+    post:
+      tags:
+        - User
+      summary: 'User login'
+      description: 'User login'
+      operationId: users.Login
+      parameters:
+        -
+          $ref: '#/components/parameters/X-localization'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: password
+              type: object
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiModel'
+  /api/logout:
+    post:
+      tags:
+        - User
+      summary: 'User Logout'
+      description: 'User Logout'
+      operationId: users.logout
+      parameters:
+        -
+          $ref: '#/components/parameters/X-localization'
+      requestBody:
+        content:
+          multipart/form-data: {  }
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiModel'
+      security:
+        -
+          Bearer: []
+  /api/profile_update:
+    post:
+      tags:
+        - User
+      summary: 'User profile update'
+      description: 'User profile update'
+      operationId: users.profileupdate
+      parameters:
+        -
+          $ref: '#/components/parameters/X-localization'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+                - name
+                - user_name
+                - avatar
+                - email
+                - user_role
+              properties:
+                name:
+                  type: string
+                user_name:
+                  type: string
+                avatar:
+                  type: file
+                email:
+                  type: string
+                user_role:
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiModel'
+      security:
+        -
+          Bearer: []
+components:
+  schemas:
+    ApiModel:
+      required:
+        - statusCode
+        - msg
+        - data
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        msg:
+          type: string
+        data:
+          type: object
+      type: object
+      example:
+        statusCode: 200
+        message: successful
+        data: null
+    pageRequestSchema:
+      properties:
+        page:
+          description: '(Optional) Pagination page number. Default is 1'
+          type: integer
+        limit:
+          description: '(Optional) Pagination page limit. Default is 8'
+          type: integer
+      type: object
+  parameters:
+    X-localization:
+      name: X-localization
+      in: header
+      description: 'Language (e.g. `en`, `ar`) (default will be: `en`)'
+      schema:
+        type: string
+        enum:
+          - en
+          - ar
+    page:
+      name: page
+      in: query
+      description: '(Optional) Pagination page number. Default is 1'
+      schema:
+        type: integer
+    limit:
+      name: limit
+      in: query
+      description: '(Optional) Pagination page limit. Default is 8'
+      schema:
+        type: integer
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+      bearerFormat: JWT

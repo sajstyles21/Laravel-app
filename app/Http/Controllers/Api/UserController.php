@@ -148,6 +148,7 @@ class UserController extends Controller
      *                 @OA\Property(
      *                     property="user_role",
      *                     type="string",
+     *                     description="admin , user",
      *                 ),
      *             )
      *         )

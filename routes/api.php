@@ -23,6 +23,7 @@ Route::get('documentation', function () {
 Route::namespace('Api')->group(function () {
     Route::middleware(['auth:api'])->group(function () {
         Route::post('profile_update', [UserController::class,'profileUpdate']);
+        Route::post('logout', [UserController::class,'logout']);
     });
     Route::post('login', [UserController::class,'login']);
     Route::post('send_invite', [InviteController::class,'sendInvite']);
